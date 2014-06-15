@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:bms="http://java.sun.com/jsf/composite/bms"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core">
+	<ui:composition template="/template.xhtml">  
+	  	<ui:define name="title">Search Blog</ui:define>
+	  	<ui:define name="content">
+	  		<h:form styleClass="form-horizontal">
+				<h1>Search Blog</h1>
+				
+				<bms:blogSearchOptions blogSearchOptions="#{searchBlog.options}">
+					<f:facet name="buttons">
+						<h:commandButton class="btn btn-primary" value="Search" action="#{searchBlog.search}"></h:commandButton>
+					</f:facet>
+				</bms:blogSearchOptions>			
+				
+				<h:dataTable styleClass="table table-bordered table-condensed table-hover" value="#{searchBlog.result}" var="blog"
+							 columnClasses="col-sm-6, col-sm-6" >
+					<h:column>
+						<f:facet name="header">Name</f:facet>
+						#{blog.name}
+					</h:column>
+					<h:column>
+						<f:facet name="header">Description</f:facet>
+						#{blog.description}
+					</h:column>	
+					<h:column>
+						<h:commandLink class="btn btn-primary glyphicon glyphicon-pencil" action="#{searchBlog.update(blog)}" title="Update">
+						</h:commandLink>							
+					</h:column>
+					<h:column>
+						<h:commandLink class="btn btn-danger glyphicon glyphicon-trash" action="#{searchBlog.delete(blog)}" title="Delete">
+						</h:commandLink>
+					</h:column>	
+				</h:dataTable>
+			</h:form>
+	  	</ui:define>
+	</ui:composition>
+</html>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:bms="http://java.sun.com/jsf/composite/bms"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core">
+	<ui:composition template="/template.xhtml">  
+	  	<ui:define name="title">Search Post</ui:define>
+	  	<ui:define name="content">		
+			<h:form styleClass="form-horizontal">
+				<h1>Search Post</h1>
+				
+				<bms:postSearchOptions options="#{searchPost.options}">
+					<f:facet name="buttons">
+						<h:commandButton class="btn btn-primary" value="Search" action="#{searchPost.search}"></h:commandButton>
+					</f:facet>
+				</bms:postSearchOptions>				
+			</h:form>
+			<h:form>			
+				<h:dataTable styleClass="table table-bordered table-condensed table-hover" value="#{searchPost.result}" var="post"
+							 columnClasses="col-sm-6, col-sm-6" >
+					<h:column>
+						<f:facet name="header">
+							Title
+						</f:facet>
+						#{post.title}
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							Body
+						</f:facet>
+						#{post.body}
+					</h:column>	
+					<h:column>
+						<h:commandLink class="btn btn-primary glyphicon glyphicon-pencil" action="#{searchPost.update(post)}"
+							title="Update">
+						</h:commandLink>							
+					</h:column>
+					<h:column>
+						<h:commandLink class="btn btn-danger glyphicon glyphicon-trash" action="#{searchPost.delete(post)}"
+								title="Delete">
+							</h:commandLink>
+					</h:column>		
+				</h:dataTable>
+				<center>
+					<ul class="pagination">
+						<ui:repeat value="#{searchPost.pages}" var="page">
+							<li class="#{page == searchPost.page ? 'active' : ''}">
+								<h:commandLink value="#{page}" action="#{searchPost.goToPage(page)}">
+									<f:ajax render="@form"></f:ajax>
+								</h:commandLink>								
+							</li>
+						</ui:repeat>					
+					</ul>
+				</center>
+				
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</html>
