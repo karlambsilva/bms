@@ -23,7 +23,7 @@ public class Post implements Cloneable{
 	private Integer id;
 	private String title;
 	private String body;
-	private Date creationDate;
+	private Date creationDate = new Date();
 	private String author;
 	private Blog blog;
 	

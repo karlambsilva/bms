@@ -14,7 +14,7 @@
 				<bms:blog blog="#{searchBlog.blog}" disabled="true">
 					<f:facet name="buttons">
 						<h:commandButton class="btn btn-primary" value="Delete" disabled="#{searchBlog.blogDeleted}" action="#{searchBlog.confirmDeletion}"></h:commandButton>
-						<h:commandButton class="btn" value="Back" outcome="searchBlog"></h:commandButton>
+						<h:button class="btn" value="Back" outcome="searchBlog"></h:button>
 					</f:facet>
 				</bms:blog>	
 								

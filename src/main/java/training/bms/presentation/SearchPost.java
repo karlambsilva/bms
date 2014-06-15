@@ -117,9 +117,9 @@ public class SearchPost {
 		Post postAux = new Post();
 		postAux.setId(post.getId());
 		postAux.setTitle(post.getTitle());
-		postAux.setCreationDate(post.getCreationDate());
-		postAux.setTitle(post.getTitle());
 		postAux.setBody(post.getBody());
+		postAux.setAuthor(post.getAuthor());
+		postAux.setCreationDate(post.getCreationDate());
 		
 		this.form = new PostForm();
 		this.form.setPost(postAux);
