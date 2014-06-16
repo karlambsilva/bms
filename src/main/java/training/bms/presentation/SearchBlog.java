@@ -73,7 +73,6 @@ public class SearchBlog {
 		blogAux.setName(blog.getName());
 		blogAux.setDescription(blog.getDescription());
 		this.blog = blogAux;
-		System.out.println(blog);
 		return "updateBlog";
 	}
 	
