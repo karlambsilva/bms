@@ -96,29 +96,15 @@ public class PostDao {
 	}	
 
 
-	private void setParameters(PostSearchOptions options, TypedQuery<?> query) {
-		if (options.getBlogId() != null){
-			query.setParameter("blogId", options.getBlogId());
-		}
-		
-		if(options.getTitle() != null && options.getTitle().length() > 0){
-			query.setParameter("postTitle", "%" + options.getTitle().toUpperCase() + "%");
-		}
-		
-		if(options.getBody() != null && options.getBody().length() > 0){
-			query.setParameter("postBody", "%" + options.getBody().toUpperCase() + "%");
-		}
-		
-		if(options.getAuthor() != null && options.getAuthor().length() > 0){
-			query.setParameter("postAuthor", "%" + options.getAuthor().toUpperCase() + "%");
-		}
-	}
-
 	private StringBuilder toPredicate(PostSearchOptions options) {
 		StringBuilder predicate = new StringBuilder("1 = 1");
 		
 		if (options.getBlogId() != null){
 			predicate.append(" and post.blog.id = :blogId");
+		}
+		
+		if (options.getPostId() != null){
+			predicate.append(" and post.id = :postId");
 		}
 		
 		if(options.getTitle() != null && options.getTitle().length() > 0){
@@ -133,6 +119,28 @@ public class PostDao {
 			predicate.append(" and upper(post.author) like :postAuthor");
 		}
 		return predicate;
+	}
+	
+	private void setParameters(PostSearchOptions options, TypedQuery<?> query) {
+		if (options.getBlogId() != null){
+			query.setParameter("blogId", options.getBlogId());
+		}
+		
+		if (options.getPostId() != null){
+			query.setParameter("postId", options.getPostId());
+		}
+		
+		if(options.getTitle() != null && options.getTitle().length() > 0){
+			query.setParameter("postTitle", "%" + options.getTitle().toUpperCase() + "%");
+		}
+		
+		if(options.getBody() != null && options.getBody().length() > 0){
+			query.setParameter("postBody", "%" + options.getBody().toUpperCase() + "%");
+		}
+		
+		if(options.getAuthor() != null && options.getAuthor().length() > 0){
+			query.setParameter("postAuthor", "%" + options.getAuthor().toUpperCase() + "%");
+		}
 	}
 
 	public void deletePost(Post post) {

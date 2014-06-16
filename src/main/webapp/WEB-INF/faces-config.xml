@@ -11,16 +11,7 @@
 			<to-view-id>/blog/updateBlog.xhtml</to-view-id>
 			<redirect></redirect>
 		</navigation-case>	
-	</navigation-rule>   
-	
-	<navigation-rule>
-		<from-view-id>*</from-view-id>
-		<navigation-case>
-			<from-outcome></from-outcome>
-			<to-view-id></to-view-id>
-			<redirect></redirect>
-		</navigation-case>	
-	</navigation-rule>  
+	</navigation-rule>  	
 	
 	<navigation-rule>
 		<from-view-id>*</from-view-id>

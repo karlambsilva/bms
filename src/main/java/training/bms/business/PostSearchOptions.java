@@ -18,7 +18,8 @@ public class PostSearchOptions {
 			return value;
 		}		
 	}
-	
+
+	private Integer postId;
 	private Integer blogId;
 	private String title;
 	private String body;
@@ -100,6 +101,14 @@ public class PostSearchOptions {
 	public String toString() {
 		return "PostSearchOptions [title=" + title + ", body="
 				+ body + "author=" + author + "]";
+	}
+
+	public Integer getPostId() {
+		return postId;
+	}
+	
+	public void setPostId(Integer postId) {
+		this.postId = postId;
 	}
 
 }

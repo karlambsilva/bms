@@ -48,7 +48,7 @@ public class Post implements Cloneable{
 		this.title = title;
 	}
 	
-	@Size(min=1, max=1000)
+	@Size(min=1, max=10000)
 	@Column(name="POS_BODY")
 	public String getBody() {
 		return body;
