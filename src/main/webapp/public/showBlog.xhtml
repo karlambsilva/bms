@@ -27,17 +27,22 @@
 		<title><ui:insert name="title"></ui:insert></title>
 	</h:head>
 	<body>
-		#{showBlog.blog.name}
-		
-		<ul>
+		<div class="container">
+			<h1 class="page-header">#{showBlog.blog.name}</h1>
 			<ui:repeat var="post" value="#{showBlog.posts}">
-				<li>
+				<h2>
 					<a href="/bms/faces/public/showPost.xhtml?postId=#{post.id}">
 						#{post.title}
-					</a> - #{post.creationDate}			
-				</li>
+					</a>		
+				</h2>
+				<p>					
+					#{showBlog.getPostBodyPreview(post)}
+					<a href="showPost.xhtml?postId=#{post.id}">
+						Leia mais
+					</a>
+				</p>
 			</ui:repeat>
-		</ul>
+		</div>
 		
 	</body>
 </html>

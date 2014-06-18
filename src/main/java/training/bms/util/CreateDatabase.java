@@ -1,17 +1,15 @@
 package training.bms.util;
 
-import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
 
 import training.bms.business.Blog;
 import training.bms.business.Post;
+import training.bms.business.Tag;
 
 public class CreateDatabase {
 	
@@ -34,6 +32,16 @@ public class CreateDatabase {
 		post.setCreationDate(new Date());
 		post.setBlog(blog);
 		
+		Tag tag1 = new Tag();
+		tag1.setName("Tag 1");
+		manager.persist(tag1);
+		
+		Tag tag2 = new Tag();
+		tag2.setName("Tag 2");
+		manager.persist(tag2);
+		
+		post.getTags().add(tag1);
+		post.getTags().add(tag2);
 				
 		/*
 		 * blog.getPosts().add(post);

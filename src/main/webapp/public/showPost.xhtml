@@ -29,7 +29,9 @@
 	<body>
 		<div class="container" style="text-align:justify;">
 			<h1 class="page-header">
-				#{showPost.post.blog.name}
+				<a href="showBlog.xhtml?blogId=#{showPost.post.blog.id}">				
+					#{showPost.post.blog.name}
+				</a>
 			</h1>
 			<h2>
 				#{showPost.post.title}

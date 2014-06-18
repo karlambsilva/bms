@@ -1,6 +1,8 @@
 package training.bms.business;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,13 +10,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
-
-import training.bms.util.CreateDatabase;
 
 @Entity
 @Table(name="POS_POST")
@@ -26,6 +28,11 @@ public class Post implements Cloneable{
 	private Date creationDate = new Date();
 	private String author;
 	private Blog blog;
+	private List<Tag> tags;
+	
+	public Post() {
+		tags = new ArrayList<>();
+	}
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -86,4 +93,19 @@ public class Post implements Cloneable{
 	public void setBlog(Blog blog) {
 		this.blog = blog;
 	}
+	
+	@ManyToMany
+	@JoinTable(
+			name="POT_POST_TAG",
+			joinColumns=@JoinColumn(name="POS_ID"),
+			inverseJoinColumns=@JoinColumn(name="TAG_ID")
+			)
+	
+	public List<Tag> getTags() {
+		return tags;
+	}
+	
+	public void setTags(List<Tag> tags) {
+		this.tags = tags;
+	}	
 }

@@ -64,4 +64,19 @@ public class ShowBlog {
 		this.posts = posts;
 	}
 	
+	public String getPostBodyPreview(Post post){
+		
+		StringBuilder builder = new StringBuilder();
+		
+		for (int i = 0; i < post.getBody().length(); i++) {
+			char c = post.getBody().charAt(i);
+			if(c == '\n' || c == '\r'){
+				break;
+			}else{
+				builder.append(c);
+			}
+		}
+		return builder.toString();
+	}
+	
 }

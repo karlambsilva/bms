@@ -43,12 +43,14 @@ public class ShowPost {
 		this.post = post;
 	}
 	
-	public StringBuilder getPostBody() {
+	public String getPostBody() {
 		String escapedBody = StringEscapeUtils.escapeHtml(post.getBody());
 		StringBuilder body = new StringBuilder();
 		
 		body.append("<p>");
 		
+		escapedBody.replaceAll("[(\\n\\r)(\\n)(\\r)]+", "</p><p>");		
+		/*
 		for (int i = 0; i < escapedBody.length(); ++i){
 			char c = escapedBody.charAt(i);
 			
@@ -57,9 +59,10 @@ public class ShowPost {
 			}else{
 				body.append(c);
 			}
-		}
+		}*/
 		
 		body.append("</p>");
-		return body;
+		body.append(escapedBody);
+		return body.toString();
 	}
 }
