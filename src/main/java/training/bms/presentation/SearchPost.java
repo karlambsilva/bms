@@ -120,6 +120,7 @@ public class SearchPost {
 		postAux.setBody(post.getBody());
 		postAux.setAuthor(post.getAuthor());
 		postAux.setCreationDate(post.getCreationDate());
+		postAux.setTags(post.getTags());
 		
 		this.form = new PostForm();
 		this.form.setPost(postAux);

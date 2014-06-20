@@ -7,6 +7,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
+import org.h2.engine.SysProperties;
+
 import training.bms.business.Blog;
 import training.bms.business.Post;
 import training.bms.business.Tag;
@@ -61,6 +63,7 @@ public class CreateDatabase {
 		*/
 		
 		post = manager.find(Post.class, 1);
+		System.out.println(post.getTags());
 		System.out.println(post.getTitle());
 		//blog = post.getBlog();
 		System.out.println(blog.getName());
