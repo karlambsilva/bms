@@ -57,23 +57,27 @@ public class PostDao {
 		
 		EntityManagerFactory factory = EntityManagerFactoryHolder.factory;
 		EntityManager manager = factory.createEntityManager();	
-		TypedQuery<Post> query = manager.createQuery(
-				"SELECT post FROM training.bms.business.Post post where " + predicate, 
-				Post.class);		
 		
-		setParameters(options, query);
-		
-		if (options.getStartPosition() != null){
-			query.setFirstResult(options.getStartPosition());
+		try {
+			TypedQuery<Post> query = manager.createQuery(
+					"SELECT post FROM training.bms.business.Post post where " + predicate, 
+					Post.class);		
+			
+			setParameters(options, query);
+			
+			if (options.getStartPosition() != null){
+				query.setFirstResult(options.getStartPosition());
+			}			
+			if (options.getMaxResults() != null){
+				query.setMaxResults(options.getMaxResults());
+			}			
+			List<Post> result = query.getResultList();
+			
+			return result;
+			
+		} finally  { //pq eu quero ter certeza que isso será executado.
+			manager.close();
 		}
-		
-		if (options.getMaxResults() != null){
-			query.setMaxResults(options.getMaxResults());
-		}
-		
-		List<Post> result = query.getResultList();
-		
-		return result;
 		
 	}
 	

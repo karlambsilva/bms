@@ -67,5 +67,15 @@ public class CreateDatabase {
 		System.out.println(post.getTitle());
 		//blog = post.getBlog();
 		System.out.println(blog.getName());
+		
+		/* Explicando o manager.close();
+		 * 
+			manager.clear();
+			post = manager.find(Post.class, 1);
+			manager.close();
+			System.out.println(post.getBlog());
+			post.getTags();
+			System.out.println(post.getTags().size());
+		*/
 	}
 }
