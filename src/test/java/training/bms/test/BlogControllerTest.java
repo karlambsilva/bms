@@ -1,10 +1,8 @@
 package training.bms.test;
 
-import java.util.ArrayList;
-
 import org.easymock.EasyMock;
-import org.junit.Test;
 import org.junit.Assert;
+import org.junit.Test;
 
 import training.bms.business.Blog;
 import training.bms.business.BlogController;

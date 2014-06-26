@@ -2,9 +2,10 @@ package training.bms.presentation;
 
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
-
-import org.hibernate.event.spi.PostCollectionRecreateEvent;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.WebApplicationContext;
 
 import training.bms.business.Blog;
 import training.bms.business.BlogController;
@@ -14,12 +15,15 @@ import training.bms.business.PostController;
 import training.bms.business.PostSearchOptions;
 import training.bms.business.PostSearchOptions.Order;
 
-@ManagedBean
+@Component
+@Scope(WebApplicationContext.SCOPE_REQUEST)
 public class ShowBlog {
 
 	private Blog blog;
 	private int blogId;
 	private List<Post> posts;
+	private @Autowired BlogController controller;
+	private @Autowired PostController postController;
 	
 	public Blog getBlog() {
 		return blog;
@@ -39,7 +43,6 @@ public class ShowBlog {
 		BlogSearchOptions options = new BlogSearchOptions();
 		options.setId(blogId);
 		
-		BlogController controller = new BlogController();
 		List <Blog> blogs = controller.searchBlog(options);
 		
 		if (blogs.size() > 0){
@@ -51,7 +54,6 @@ public class ShowBlog {
 			
 			postOptions.setBlogId(blogId);
 			
-			PostController postController = new PostController();
 			posts = postController.searchPost(postOptions);
 		}
 	}

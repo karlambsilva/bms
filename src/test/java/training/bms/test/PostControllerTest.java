@@ -1,12 +1,5 @@
 package training.bms.test;
 
-import java.util.ArrayList;
-
-import org.easymock.EasyMock;
-import org.junit.Test;
-import org.junit.Assert;
-
-import training.bms.persistence.PostDao;
 
 public class PostControllerTest {
 	

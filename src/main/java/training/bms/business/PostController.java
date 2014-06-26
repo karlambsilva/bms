@@ -2,17 +2,15 @@ package training.bms.business;
 
 import java.util.List;
 
-import javax.management.RuntimeErrorException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import training.bms.persistence.PostDao;
 
+@Component
 public class PostController {
 	
-	private PostDao dao;
-	
-	public PostController(){
-		dao = new PostDao();
-	}
+	private @Autowired PostDao dao;
 	
 	public PostDao getDao() {
 		return dao;

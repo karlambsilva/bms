@@ -1,22 +1,22 @@
 package training.bms.presentation;
 
-import java.util.List;
-
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
-import training.bms.business.Blog;
-import training.bms.business.BlogController;
-import training.bms.business.BlogSearchOptions;
-import training.bms.business.Post;
-import training.bms.business.PostController;
-import training.bms.business.BusinessException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.WebApplicationContext;
 
-@ManagedBean
+import training.bms.business.BusinessException;
+import training.bms.business.PostController;
+
+@Component
+@Scope(WebApplicationContext.SCOPE_REQUEST)
 public class NewPost {
 	
 	private PostForm form;
+	private @Autowired PostController controller;
 	
 	public NewPost() {
 		form = new PostForm();		
@@ -34,7 +34,6 @@ public class NewPost {
 		FacesMessage message = new FacesMessage();
 		
 		try{
-			PostController controller = new PostController();
 			controller.savePost(form.getPost());
 			message.setSummary("Post successufully saved");
 			message.setSeverity(FacesMessage.SEVERITY_INFO);

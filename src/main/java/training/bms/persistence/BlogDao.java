@@ -3,34 +3,29 @@ package training.bms.persistence;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+
+import org.springframework.stereotype.Component;
 
 import training.bms.business.Blog;
 import training.bms.business.BlogSearchOptions;
 
-public class BlogDao {		
+@Component
+public class BlogDao {	
+	
+	private @PersistenceContext EntityManager manager;
 	
 	public boolean containsBlog(String blogName){
 
 		return searchBlog(blogName) != null;
 	}
 	
-	public void insertBlog(Blog blog){
-		EntityManagerFactory factory = EntityManagerFactoryHolder.factory;
-		EntityManager manager = factory.createEntityManager();		
-		EntityTransaction transaction = manager.getTransaction();
-		
-		transaction.begin();
-		manager.persist(blog);
-		transaction.commit();
-		
+	public void insertBlog(Blog blog){	
+		manager.persist(blog);		
 	}
 	
 	public Blog searchBlog(String blogName){
-		EntityManagerFactory factory = EntityManagerFactoryHolder.factory;
-		EntityManager manager = factory.createEntityManager();	
 		TypedQuery<Blog> query = manager.createQuery(
 				"SELECT blog FROM training.bms.business.Blog blog WHERE UPPER(blog.name) = :blogName", 
 				Blog.class);
@@ -57,9 +52,7 @@ public class BlogDao {
 		if(options.getDescription() != null && options.getDescription().length() > 0){
 			predicate.append(" and upper(blog.description) like :blogDescription");
 		}
-		
-		EntityManagerFactory factory = EntityManagerFactoryHolder.factory;
-		EntityManager manager = factory.createEntityManager();	
+			
 		TypedQuery<Blog> query = manager.createQuery(
 				"SELECT blog FROM training.bms.business.Blog blog where " + predicate, 
 				Blog.class);
@@ -81,26 +74,13 @@ public class BlogDao {
 		return result;
 	}
 
-	public void deleteBlog(Blog blog) {
-		EntityManagerFactory factory = EntityManagerFactoryHolder.factory;
-		EntityManager manager = factory.createEntityManager();		
-		EntityTransaction transaction = manager.getTransaction();
+	public void deleteBlog(Blog blog) {	
 		Blog managedBlog = manager.find(Blog.class, blog.getId());
 		
-		transaction.begin();
 		manager.remove(managedBlog);
-		transaction.commit();
 	}
 
 	public void updateBlog(Blog blog) {
-
-		EntityManagerFactory factory = EntityManagerFactoryHolder.factory;
-		EntityManager manager = factory.createEntityManager();		
-		EntityTransaction transaction = manager.getTransaction();
-		
-		transaction.begin();
 		manager.merge(blog);
-		transaction.commit();
-		
 	}
 }

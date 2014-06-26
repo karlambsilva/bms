@@ -4,17 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.WebApplicationContext;
+
+import training.bms.business.BusinessException;
 import training.bms.business.Post;
 import training.bms.business.PostController;
 import training.bms.business.PostSearchOptions;
-import training.bms.business.BusinessException;
 
-@ManagedBean
-@SessionScoped
+@Component
+@Scope(WebApplicationContext.SCOPE_SESSION)
 public class SearchPost {
 	
 	private static final int RESULTS_PER_PAGE = 2;
@@ -24,6 +27,7 @@ public class SearchPost {
 	private boolean postDeleted;
 	private List<Integer> pages;
 	private int page;
+	private @Autowired PostController controller;
 	
 	public SearchPost() {		
 		reset();
@@ -82,8 +86,7 @@ public class SearchPost {
 		this.page = page;
 	}
 
-	public void search(){		
-		PostController controller = new PostController();		
+	public void search(){				
 		
 		int resultCount = controller.searchPostCount(options);
 		int pageCount = resultCount / RESULTS_PER_PAGE;
@@ -108,8 +111,6 @@ public class SearchPost {
 		options.setStartPosition(startPosition);
 		options.setMaxResults(RESULTS_PER_PAGE);
 
-
-		PostController controller = new PostController();
 		result = controller.searchPost(options);
 	}
 	
@@ -132,7 +133,6 @@ public class SearchPost {
 		FacesMessage message = new FacesMessage();
 		
 		try{
-			PostController controller = new PostController();
 			controller.updatePost(form.getPost());
 			reset();
 			message.setSummary("Post successufully saved");
@@ -156,7 +156,6 @@ public class SearchPost {
 	
 	public void confirmDeletion(){		
 		
-		PostController controller = new PostController();
 		controller.deletePost(form.getPost());
 		this.postDeleted = true;
 		reset();

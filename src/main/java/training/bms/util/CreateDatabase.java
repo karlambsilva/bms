@@ -7,8 +7,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
-import org.h2.engine.SysProperties;
-
 import training.bms.business.Blog;
 import training.bms.business.Post;
 import training.bms.business.Tag;

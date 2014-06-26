@@ -3,34 +3,29 @@ package training.bms.persistence;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+
+import org.springframework.stereotype.Component;
 
 import training.bms.business.Post;
 import training.bms.business.PostSearchOptions;
 
+@Component
 public class PostDao {		
+	
+	private @PersistenceContext EntityManager manager;
 	
 	public boolean containsPost(String postTitle){
 
 		return searchPost(postTitle) != null;
 	}
 	
-	public void insertPost(Post post){
-		EntityManagerFactory factory = EntityManagerFactoryHolder.factory;
-		EntityManager manager = factory.createEntityManager();		
-		EntityTransaction transaction = manager.getTransaction();
-		
-		transaction.begin();
+	public void insertPost(Post post){	
 		manager.persist(post);
-		transaction.commit();
-		
 	}
 	
 	public Post searchPost(String postTitle){
-		EntityManagerFactory factory = EntityManagerFactoryHolder.factory;
-		EntityManager manager = factory.createEntityManager();	
 		TypedQuery<Post> query = manager.createQuery(
 				"SELECT post FROM training.bms.business.Post post WHERE UPPER(post.title) = :postTitle", 
 				Post.class);
@@ -54,39 +49,28 @@ public class PostDao {
 				predicate.append(" desc");
 			}
 		}	
+						
+		TypedQuery<Post> query = manager.createQuery(
+				"SELECT post FROM training.bms.business.Post post where " + predicate, 
+				Post.class);		
 		
-		EntityManagerFactory factory = EntityManagerFactoryHolder.factory;
-		EntityManager manager = factory.createEntityManager();	
+		setParameters(options, query);
 		
-		try {
-			TypedQuery<Post> query = manager.createQuery(
-					"SELECT post FROM training.bms.business.Post post where " + predicate, 
-					Post.class);		
-			
-			setParameters(options, query);
-			
-			if (options.getStartPosition() != null){
-				query.setFirstResult(options.getStartPosition());
-			}			
-			if (options.getMaxResults() != null){
-				query.setMaxResults(options.getMaxResults());
-			}			
-			List<Post> result = query.getResultList();
-			
-			return result;
-			
-		} finally  { //pq eu quero ter certeza que isso será executado.
-			manager.close();
-		}
+		if (options.getStartPosition() != null){
+			query.setFirstResult(options.getStartPosition());
+		}			
+		if (options.getMaxResults() != null){
+			query.setMaxResults(options.getMaxResults());
+		}			
+		List<Post> result = query.getResultList();
 		
+		return result;		
 	}
 	
 	public int searchPostCount(PostSearchOptions options) {
 		
 		StringBuilder predicate = toPredicate(options);			
 
-		EntityManagerFactory factory = EntityManagerFactoryHolder.factory;
-		EntityManager manager = factory.createEntityManager();	
 		TypedQuery<Long> query = manager.createQuery(
 				"SELECT count(post) FROM training.bms.business.Post post where " + predicate, 
 				Long.class);		
@@ -147,26 +131,12 @@ public class PostDao {
 		}
 	}
 
-	public void deletePost(Post post) {
-		EntityManagerFactory factory = EntityManagerFactoryHolder.factory;
-		EntityManager manager = factory.createEntityManager();		
-		EntityTransaction transaction = manager.getTransaction();
-		Post managedPost = manager.find(Post.class, post.getId());
-		
-		transaction.begin();
+	public void deletePost(Post post) {		
+		Post managedPost = manager.find(Post.class, post.getId());		
 		manager.remove(managedPost);
-		transaction.commit();
 	}
 
 	public void updatePost(Post post) {
-
-		EntityManagerFactory factory = EntityManagerFactoryHolder.factory;
-		EntityManager manager = factory.createEntityManager();		
-		EntityTransaction transaction = manager.getTransaction();
-		
-		transaction.begin();
 		manager.merge(post);
-		transaction.commit();
-		
 	}
 }

@@ -3,23 +3,29 @@ package training.bms.presentation;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.WebApplicationContext;
 
 import training.bms.business.Blog;
 import training.bms.business.BlogController;
 import training.bms.business.BlogSearchOptions;
 import training.bms.business.BusinessException;
 
-@ManagedBean
-@SessionScoped
+//@ManagedBean
+//@SessionScoped
+@Component
+@Scope(WebApplicationContext.SCOPE_SESSION)
 public class SearchBlog {
 	
 	private List<Blog> result;
 	private BlogSearchOptions options;
 	private Blog blog;
 	private boolean blogDeleted;
+	private @Autowired BlogController controller;
 	
 	public SearchBlog() {
 		reset();
@@ -62,8 +68,7 @@ public class SearchBlog {
 		this.blogDeleted = blogDeleted;
 	}
 	
-	public void search(){		
-		BlogController controller = new BlogController();
+	public void search(){
 		result = controller.searchBlog(options);
 	}
 	
@@ -81,7 +86,6 @@ public class SearchBlog {
 		FacesMessage message = new FacesMessage();
 		
 		try{
-			BlogController controller = new BlogController();
 			controller.updateBlog(blog);
 			reset();
 			message.setSummary("Blog successufully saved");
@@ -104,7 +108,6 @@ public class SearchBlog {
 	
 	public void confirmDeletion(){		
 		
-		BlogController controller = new BlogController();
 		controller.deleteBlog(blog);
 		this.blogDeleted = true;
 		reset();
