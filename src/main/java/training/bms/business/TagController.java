@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import training.bms.persistence.TagDao;
 
@@ -20,6 +21,7 @@ public class TagController {
 		this.dao = dao;
 	}
 	
+	@Transactional
 	public void saveTag(Tag tag) {
 		if(dao.containsTag(tag.getName())){
 			throw new BusinessException("There is a tag named " + tag.getName() + " already");
@@ -32,10 +34,12 @@ public class TagController {
 		return dao.searchTag(options);		
 	}
 	
+	@Transactional
 	public void deleteTag(Tag tag){
 		dao.deleteTag(tag);
 	}
 	
+	@Transactional
 	public void updateTag(Tag tag){
 		Tag databaseTag = dao.searchTag(tag.getName());
 		

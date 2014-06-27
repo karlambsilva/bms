@@ -6,9 +6,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import org.springframework.stereotype.Component;
+
 import training.bms.business.Tag;
 import training.bms.business.TagSearchOptions;
 
+@Component
 public class TagDao {
 	
 	private @PersistenceContext EntityManager manager;

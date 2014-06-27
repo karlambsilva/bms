@@ -95,7 +95,7 @@ public class Post implements Cloneable{
 		this.blog = blog;
 	}
 	
-	@ManyToMany(fetch=FetchType.EAGER)
+	@ManyToMany
 	@JoinTable(
 			name="POT_POST_TAG",
 			joinColumns=@JoinColumn(name="POS_ID"),

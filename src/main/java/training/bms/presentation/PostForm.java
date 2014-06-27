@@ -3,6 +3,11 @@ package training.bms.presentation;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.context.FacesContext;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.jsf.FacesContextUtils;
+
 import training.bms.business.Blog;
 import training.bms.business.BlogController;
 import training.bms.business.BlogSearchOptions;
@@ -18,10 +23,17 @@ public class PostForm {
 	private Post post;
 	
 	public PostForm() {
-		BlogController controller = new BlogController();		
+		
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ApplicationContext applicationContext = FacesContextUtils.getWebApplicationContext(facesContext);
+		
+		applicationContext.getBean(BlogController.class);
+
+		
+		BlogController controller = applicationContext.getBean(BlogController.class);	
 		blogs = controller.searchBlog(new BlogSearchOptions());
 		
-		TagController tagController = new TagController();
+		TagController tagController = applicationContext.getBean(TagController.class);
 		tags = tagController.searchTag(new TagSearchOptions());
 		
 		post = new Post();
