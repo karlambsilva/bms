@@ -42,7 +42,7 @@ public class TagDao {
 		
 		StringBuilder predicate = new StringBuilder("1 = 1");
 		
-		if(options.getId() != null){
+		if(options.getTagId() != null){
 			predicate.append(" and tag.id = :tagId");
 		}
 		
@@ -54,8 +54,8 @@ public class TagDao {
 				"SELECT tag FROM training.bms.business.Tag tag where " + predicate, 
 				Tag.class);
 		
-		if(options.getId() != null){
-			query.setParameter("tagId", options.getId());
+		if(options.getTagId() != null){
+			query.setParameter("tagId", options.getTagId());
 		}
 		
 		if(options.getName() != null && options.getName().length() > 0){

@@ -27,9 +27,6 @@ public class PostForm {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ApplicationContext applicationContext = FacesContextUtils.getWebApplicationContext(facesContext);
 		
-		applicationContext.getBean(BlogController.class);
-
-		
 		BlogController controller = applicationContext.getBean(BlogController.class);	
 		blogs = controller.searchBlog(new BlogSearchOptions());
 		

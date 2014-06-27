@@ -115,13 +115,18 @@ public class SearchPost {
 	}
 	
 	public String update(Post post){
-		Post postAux = new Post();
+		/*Post postAux = new Post();
 		postAux.setId(post.getId());
 		postAux.setTitle(post.getTitle());
 		postAux.setBody(post.getBody());
 		postAux.setAuthor(post.getAuthor());
 		postAux.setCreationDate(post.getCreationDate());
-		postAux.setTags(post.getTags());
+		postAux.setTags(post.getTags());*/
+		
+		PostSearchOptions options = new PostSearchOptions();
+		options.setPostId(post.getId());
+		
+		Post postAux = controller.searchPost(options).get(0);
 		
 		this.form = new PostForm();
 		this.form.setPost(postAux);
@@ -148,8 +153,14 @@ public class SearchPost {
 	}
 	
 	public String delete(Post post){
+		
+		PostSearchOptions options = new PostSearchOptions();
+		options.setPostId(post.getId());
+		
+		Post postAux = controller.searchPost(options).get(0);
+		
 		this.form = new PostForm();
-		this.form.setPost(post);
+		this.form.setPost(postAux);
 		this.postDeleted = false;
 		return "deletePost";
 	}
