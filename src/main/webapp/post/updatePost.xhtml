@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:bms="http://java.sun.com/jsf/composite/bms"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets">
+	<ui:composition template="/template.xhtml">  
+	  	<ui:define name="title">Update Post</ui:define>
+	  	<ui:define name="content">
+			<h:form styleClass="form-horizontal">
+				<h1>Update Post</h1>
+			
+				<bms:post form="#{searchPost.form}">
+					<f:facet name="buttons">
+						<h:commandButton class="btn btn-primary" value="Save" action="#{searchPost.confirmUpdate}"></h:commandButton>
+						<h:commandButton class="btn" value="Back" outcome="searchPost"></h:commandButton>
+					</f:facet>
+				</bms:post>			
+								
+				<h:messages/>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</html>
